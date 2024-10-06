@@ -13,6 +13,13 @@ $stmt->bind_result($username, $foto);
 $stmt->fetch();
 $stmt->close();
 
+// Ambil data nama usaha dan alamat dari database
+$stmt = $conn->prepare("SELECT namausaha, alamat FROM identitasusaha LIMIT 1");
+$stmt->execute();
+$stmt->bind_result($namaUsaha, $alamatUsaha);
+$stmt->fetch();
+$stmt->close();
+
 // Ambil banyak pegawai dari database
 $result = $conn->query("SELECT COUNT(*) as count FROM barang");
 $row = $result->fetch_assoc();
