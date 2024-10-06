@@ -3,7 +3,7 @@ session_start();
 require 'config.php';
 require 'login_session.php';
 
-// Ambil data dari tabel pegawai
+// Ambil data dari tabel barang
 $barang = $conn->query("SELECT * FROM barang");
     
 $staffid = $_SESSION['staffid'];
@@ -345,4 +345,13 @@ if (isset($_SESSION['message'])) {
         });
     });
 
+    //Print ke PDF 
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.print-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var id = this.getAttribute('data-id');
+                window.open('print_barang.php?id=' + id, '_blank');
+            });
+        });
+    });
 </script>
