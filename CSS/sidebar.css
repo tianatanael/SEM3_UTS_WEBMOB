@@ -16,9 +16,9 @@ body {
 }
 
 .sidebar {
-    min-width: 230px;
-max-width: 250px;
-background-color: #343a40;
+    min-width: 210px;
+max-width: 230px;
+background-color: #387478;
 padding: 15px;
 color: white;
 position: fixed;
