@@ -185,7 +185,15 @@ if (isset($_SESSION['message'])) {
                     </div>
                     <div class="mb-3">
                         <label for="add_bank" class="form-label">Bank</label>
-                        <input type="text" class="form-control" id="edit_bank" name="bank" required>
+                        <select class="form-control" id="add_bank" name="bank" required>
+                            <option value="" disabled selected>Select a bank</option>
+                            <option>BCA</option>
+                            <option>BRI</option>
+                            <option>BNI</option>
+                            <option>Mandiri</option>
+                            <option>BTN</option>
+                            <option>MEGA</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="add_noaccount" class="form-label">No Account</label>
@@ -263,7 +271,16 @@ if (isset($_SESSION['message'])) {
                     </div>
                     <div class="mb-3">
                         <label for="edit_bank" class="form-label">Bank</label>
-                        <input type="text" class="form-control" id="edit_bank" name="bank" required>
+                        <select class="form-control" id="edit_bank" name="bank" required>
+                            <option value="" disabled selected>Select a bank</option>
+                            <option>BCA</option>
+                            <option>BRI</option>
+                            <option>BNI</option>
+                            <option>Mandiri</option>
+                            <option>BTN</option>
+                            <option>MEGA</option>
+                        </select>
+                        <!-- <input type="text" class="form-control" id="edit_bank" name="bank" required> -->
                     </div>
                     <div class="mb-3">
                         <label for="edit_noaccount" class="form-label">No Account</label>

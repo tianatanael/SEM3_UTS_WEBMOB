@@ -28,7 +28,7 @@ $pdf = new FPDF();
 $pdf -> AddPage('P', 'A4');
 
 // Tambahkan logo di sisi kiri dan nama perusahaan serta alamat di sisi kanan
-$logoFile = 'logo/logo.jpg'; // Path ke file logo
+$logoFile = 'logo/logo.png'; // Path ke file logo
 $logoWidth = 30; // Lebar logo
 $logoHeight = 30; // Tinggi logo
 

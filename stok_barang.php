@@ -174,7 +174,7 @@ if (isset($_SESSION['message'])) {
                     </div>
                     <div class="mb-3">
                         <label for="foto_barang">Foto Barang</label> <br>
-                        <input type="file" class="form-control" name="foto_barang" id="add_profile" accept=".jpg, .jpeg, .png" required>
+                        <input type="file" class="form-control" name="foto_barang" id="add_profile" accept=".jpg, .jpeg, .png .jfif" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Add</button>
                 </form>
