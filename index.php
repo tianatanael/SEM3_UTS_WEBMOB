@@ -81,7 +81,7 @@ $jmlhpenjualanbrg = $row['count'];
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h5 class="card-title">Stok Barang</h5>
+                                    <h5 class="card-title">Jumlah Katalog</h5>
                                     <h4><p><?php echo "$jmlhbrg";?></p></h4>
                             </div>
                             <div class="card-icon-wrapper">
