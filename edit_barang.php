@@ -25,21 +25,50 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $fileSize = $_FILES['foto_barang']['size'];
         $fileType = mime_content_type($fileTmp);
 
-        // Check if the file is valid
+        // Check if the file is valid (type and size)
         if (in_array($fileType, $allowedTypes) && $fileSize <= 2 * 1024 * 1024) {
-            // Create a unique filename using idpeg
+            // Create a unique filename using idbarang
             $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
             $newPhotoName = $idbarang . '.' . $fileExtension;
             $destination = $uploadDir . $newPhotoName;
 
-            // Move the uploaded file to the destination folder
-            if (!move_uploaded_file($fileTmp, $destination)) {
+            // Resize image to 100x100
+            list($originalWidth, $originalHeight) = getimagesize($fileTmp);
+            $newWidth = 100;
+            $newHeight = 100;
+
+            // Create a blank image with the new dimensions
+            $newImage = imagecreatetruecolor($newWidth, $newHeight);
+
+            // Load the original image based on its file type
+            if ($fileType == 'image/jpeg' || $fileType == 'image/jpg') {
+                $sourceImage = imagecreatefromjpeg($fileTmp);
+            } elseif ($fileType == 'image/png') {
+                $sourceImage = imagecreatefrompng($fileTmp);
+            }
+
+            // Resize the image
+            imagecopyresampled($newImage, $sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, $originalWidth, $originalHeight);
+
+            // Save the resized image to the destination folder
+            if ($fileType == 'image/jpeg' || $fileType == 'image/jpg') {
+                imagejpeg($newImage, $destination);
+            } elseif ($fileType == 'image/png') {
+                imagepng($newImage, $destination);
+            }
+
+            // Free up memory
+            imagedestroy($newImage);
+            imagedestroy($sourceImage);
+
+            // If there's an error saving the resized image
+            if (!file_exists($destination)) {
                 $_SESSION['message'] = ['type' => 'error', 'text' => 'Gagal mengupload foto barang.'];
                 header('Location: stok_barang.php');
                 exit();
             }
-        }else {
-            $_SESSION['message'] = ['type' => 'error', 'text' => 'File yang diupload harus berupa gambar JPG/PNG/JPEG/JFIF dan maksimal 2MB.'];
+        } else {
+            $_SESSION['message'] = ['type' => 'error', 'text' => 'File yang diupload harus berupa gambar JPG/PNG dan maksimal 2MB.'];
             header('Location: stok_barang.php');
             exit();
         }

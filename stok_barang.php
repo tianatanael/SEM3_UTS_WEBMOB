@@ -268,6 +268,15 @@ if (isset($_SESSION['message'])) {
         });
     });
 
+    // Show message if it exists in the session
+    <?php if ($message): ?>
+        Swal.fire({
+            title: '<?php echo $message['type'] === 'success' ? 'Success!' : 'Error!'; ?>',
+            text: '<?php echo $message['text']; ?>',
+            icon: '<?php echo $message['type'] === 'success' ? 'success' : 'error'; ?>'
+        });
+    <?php endif; ?>     
+
     document.addEventListener('DOMContentLoaded', function () {
         // Add event listener to all edit buttons
         document.querySelectorAll('.edit-btn').forEach(button => {
