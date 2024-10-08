@@ -83,7 +83,7 @@ if (isset($_SESSION['message'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Jaya Gudang</title>
 
     <!-- Bootstrap 5 source -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -104,7 +104,7 @@ if (isset($_SESSION['message'])) {
     <div class="container">
 
         <div class="card card-info">
-            <div class="card-header text-center">
+            <div class="card-header text-center" style="background-color:#243642">
               <h3 class="card-title"><strong>Register</strong></h3>
             </div>
             <!-- /.card-header -->
@@ -158,7 +158,7 @@ if (isset($_SESSION['message'])) {
               <!-- /.card-body -->
               
                 <div class="card-footer text-center">
-                    <button type="submit" class="btn btn-info register-btn" style="margin-top: 0px;">
+                    <button type="submit" class="btn btn-success" style="margin-top: 0px;">
                         Register
                     </button>
 

@@ -34,13 +34,6 @@
     border-radius: 5px;
 }
 
-/* For error message */
-.error_message1 {
-    color: #ff0000; /* Bootstrap's red color for error messages */
-    text-align: center; /* Center align text */
-    margin-top: -25px;
-}
-
 
 /* For password toogle icon */
 .input-group{

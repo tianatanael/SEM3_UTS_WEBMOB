@@ -27,17 +27,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               header("Location: index.php");
               exit(); 
           }else{
-              $error = "Password salah.";
+            $_SESSION['message'] = ['type' => 'error', 'text' => 'Password salah.'];
           }
       }else{
-          $error = "username salah.";
+        $_SESSION['message'] = ['type' => 'error', 'text' => 'username salah.'];
       }
   } else {
-      $error = "Username tidak ditemukan.";
+        $_SESSION['message'] = ['type' => 'error', 'text' => 'Username tidak ditemukan.'];
   }
 
   $stmt->close();
 }
+
+    // Simpan pesan ke variabel dan hapus dari session
+    $message = null;
+    if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    unset($_SESSION['message']);
+    }
 
 ?>
 
@@ -46,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Log in (v2)</title>
+    <title>Jaya Gudang</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -116,3 +123,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- /.login-box -->
 </body>
 </html>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+<script>
+
+    // Show message if it exists in the session
+    <?php if ($message): ?>
+        Swal.fire({
+            title: '<?php echo $message['type'] === 'success' ? 'Success!' : 'Error!'; ?>',
+            text: '<?php echo $message['text']; ?>',
+            icon: '<?php echo $message['type'] === 'success' ? 'success' : 'error'; ?>'
+        });
+    <?php endif; ?>  
+
+</script>
