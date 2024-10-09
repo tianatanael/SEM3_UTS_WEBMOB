@@ -55,7 +55,7 @@ if (isset($_SESSION['message'])) {
     <div class="content" id="content">
         <div class="container-fluid mt-3" style="margin-left:15px">
             <?php if (!$usaha) { 
-                $newidusaha = "U001";
+                $newidusaha = "U1";
                 ?>
             <div class="col-md-12 d-flex justify-content-between align-items-center">
                 <button type="button" class="btn btn-primary mb-3 mr-2" data-bs-toggle="modal" data-bs-target="#addusahaModal"><i class='fas fa-plus'></i> Add Usaha </button>
