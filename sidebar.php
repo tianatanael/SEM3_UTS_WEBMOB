@@ -26,7 +26,7 @@
             <ul class="sub-menu">
                 <li><a href="stok_barang.php"><span>Stok Barang</span></a></li>
                 <li><a href="pembelian.php"><span>Pembelian Barang</span></a></li>
-                <li><a href="penjualan_barang.php"><span>Penjualan Barang</span></a></li>
+                <li><a href="penjualan.php"><span>Penjualan Barang</span></a></li>
             </ul>
         </li>
         <li><a href="logout.php"><span><i class="fas fa-sign-out-alt"></i> Logout</span></a></li>

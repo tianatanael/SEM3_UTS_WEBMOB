@@ -5,6 +5,7 @@ require 'login_session.php';
 
 // Ambil data dari tabel barang
 $barang = $conn->query("SELECT * FROM barang");
+$penjualan = $conn->query("SELECT p.idjual, p.idbarang, p.tanggal, p.jumlah, p.hargasatuan, b.namabarang, b.merk FROM penjualan p JOIN barang b ON p.idbarang = b.idbarang ORDER BY p.tanggal");
     
 $staffid = $_SESSION['staffid'];
 
@@ -23,15 +24,15 @@ $stmt->bind_result($namaUsaha, $alamatUsaha);
 $stmt->fetch();
 $stmt->close();
 
-// Dapatkan nomor urut terbaru untuk idbarang baru
-$stmt = $conn->query("SELECT idbarang FROM barang ORDER BY idbarang DESC LIMIT 1");
-$latestidbarang= $stmt->fetch_assoc();
+// Dapatkan nomor urut terbaru untuk idjual baru
+$stmt = $conn->query("SELECT idjual FROM penjualan ORDER BY idjual DESC LIMIT 1");
+$latestidjual= $stmt->fetch_assoc();
 $urut = 1;
-if ($latestidbarang) {
-    $latestNumber = (int) substr($latestidbarang['idbarang'], 1);
+if ($latestidjual) {
+    $latestNumber = (int) substr($latestidjual['idjual'], 2);
     $urut = $latestNumber + 1;
 }
-$newidbarang = 'B' . str_pad($urut, 3, '0', STR_PAD_LEFT);
+$newidjual = 'PB' . str_pad($urut, 7, '0', STR_PAD_LEFT);
 
 // Simpan pesan ke variabel dan hapus dari session
 $message = null;
@@ -57,9 +58,9 @@ if (isset($_SESSION['message'])) {
         <div class="container-fluid mt-3" style="margin-left:15px">
             <div class="row">
                 <div class="col-md-12 d-flex justify-content-between align-items-center">
-                    <h4>Barang</h4>
+                    <h4>Penjualan</h4>
                     <div>
-                    <button type="button" class="btn btn-primary mb-3 mr-2" data-bs-toggle="modal" data-bs-target="#addBarangModal">
+                    <button type="button" class="btn btn-primary mb-3 mr-2" data-bs-toggle="modal" data-bs-target="#addPenjualanModal">
                         <i class='fas fa-plus'></i> Add
                     </button>
                     </div>
@@ -68,56 +69,57 @@ if (isset($_SESSION['message'])) {
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">
-                        <table id="barangTable" style="border: 3px;" class="table table-striped table-bordered table-hover">    
+                        <table id="penjualanTable" style="border: 3px;" class="table table-striped table-bordered table-hover">    
                             <thead class="text-center table-info" >
                                 <tr>
                                     <th style="width: 1%;">No</th>
-                                    <th>Foto</th> 
-                                    <th style="width: 1%;">Id Barang</th>
-                                    <th>Nama</th>
+                                    <th>ID Penjualan</th> 
+                                    <th>ID Barang</th>
+                                    <th>Nama Barang</th>
                                     <th>Merk</th>
-                                    <th>Deskripsi</th>
-                                    <th>Stok</th>
-                                    <th>Harga</th>
+                                    <th>Tanggal</th>
+                                    <th>Jumlah</th>
+                                    <th>Harga Satuan</th>
+                                    <th>Harga Total</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
                                 <?php
-                                    if ($barang && $barang->num_rows > 0) {
+                                    if ($penjualan && $penjualan->num_rows > 0) {
                                     $no = 1;
-                                    foreach($barang as $row): ?>
+                                    foreach($penjualan as $row): ?>
                                         <tr>
                                             <td> <?php echo $no++; ?> </td>
-                                            <td> <img src="foto_barang/<?php echo htmlspecialchars($row['foto']);?>"
-                                            alt="barang Photo" class="barang-photo"></td>
+                                            <td> <?php echo $row['idjual'];?></td>
                                             <td> <?php echo $row["idbarang"]; ?> </td>
                                             <td> <?php echo $row["namabarang"]; ?> </td>
                                             <td> <?php echo $row["merk"]; ?> </td>
-                                            <td> <?php echo $row["deskripsi"]; ?> </td>
-                                            <td> <?php echo $row["stok"]; ?> </td>                                    
-                                            <td> Rp <?php echo number_format($row["harga"], 0, ',', '.'); ?> </td>                               
+                                            <td> <?php echo $row["tanggal"]; ?> </td>
+                                            <td> <?php echo $row["jumlah"]; ?> </td>                                    
+                                            <td> Rp <?php echo number_format($row["hargasatuan"], 0, ',', '.'); ?> </td>                               
+                                            <td> Rp <?php echo number_format($row["hargasatuan"] * $row['jumlah'], 0, ',', '.'); ?> </td>                               
                                             <td>
                                                 <div class="d-flex justify-content-center">
                                                     <button class='btn btn-warning btn-sm edit-btn mr-1' 
                                                         data-bs-toggle='modal' 
-                                                        data-bs-target='#editBarangModal'
+                                                        data-bs-target='#editPenjualanModal'
+                                                        data-id='<?php echo htmlspecialchars($row['idjual']) ?>'
                                                         data-idbarang='<?php echo htmlspecialchars($row['idbarang']); ?>'
                                                         data-namabarang='<?php echo htmlspecialchars($row['namabarang']); ?>'
-                                                        data-merk='<?php echo htmlspecialchars($row['merk']); ?>'
-                                                        data-deskripsi='<?php echo htmlspecialchars($row['deskripsi']); ?>'
-                                                        data-stok='<?php echo htmlspecialchars($row['stok']); ?>'
-                                                        data-harga='<?php echo htmlspecialchars($row['harga']); ?>' 
-                                                        data-foto='<?php echo htmlspecialchars($row['foto']); ?>'>                                                        
+                                                        data-jumlah='<?php echo htmlspecialchars($row['jumlah']); ?>'
+                                                        data-tanggal='<?php echo htmlspecialchars($row['tanggal']); ?>'
+                                                        data-hargasatuan='<?php echo htmlspecialchars($row['hargasatuan']); ?>'>                                                        
                                                         <i class='fas fa-edit'></i> 
                                                     </button>
                                                     <button type="button" class='btn btn-success btn-sm print-btn' id="printButton"
-                                                        data-id="<?php echo htmlspecialchars($row['idbarang']); ?>">
+                                                        data-id="<?php echo htmlspecialchars($row['idjual']); ?>">
                                                         <i class='fas fa-print'>
                                                         </i>
                                                     </button>
+                                                    &nbsp;
                                                     <button class="btn btn-danger btn-sm delete-btn"
-                                                                    data-id="<?php echo htmlspecialchars($row['idbarang']); ?>">
+                                                                    data-id="<?php echo htmlspecialchars($row['idjual']); ?>">
                                                                 <i class="fas fa-trash"></i>
                                                     </button>
                                                 </div>
@@ -125,7 +127,7 @@ if (isset($_SESSION['message'])) {
                                         </tr>
                                         <?php endforeach ?>
                                         <?php } else { ?>
-                                            <tr><td colspan="9" class="text-center">No data found</td></tr>
+                                            <tr><td colspan="10" class="text-center">No data found</td></tr>
                                 <?php } ?>
                             </tbody>
                         </table>
@@ -137,44 +139,41 @@ if (isset($_SESSION['message'])) {
     <?php require 'footer.php'; ?>
 </div>
 
-<!-- Modal Add Barang -->
-<div class="modal fade" id="addBarangModal" tabindex="-1" aria-labelledby="addBarangModalLabel" aria-hidden="true">
+<!-- Modal Add Penjualan -->
+<div class="modal fade" id="addPenjualanModal" tabindex="-1" aria-labelledby="addPenjualanModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addBarangModalLabel">Add Barang</h5>
+                <h5 class="modal-title" id="addPenjualanModalLabel">Add Penjualan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="add_barang.php" method="post" enctype="multipart/form-data">
+                <form action="add_penjualan.php" method="post">
                     <div class="mb-3">
-                    <label for="idbarang" class="form-label">Id barang</label>
-                        <input type="text" class="form-control" id="add_idbarang" name="idbarang" value="<?php echo htmlspecialchars($newidbarang); ?>" readonly>
+                    <label for="idjual" class="form-label">ID Penjualan</label>
+                        <input type="text" class="form-control" id="add_idjual" name="idjual" value="<?php echo htmlspecialchars($newidjual); ?>" readonly>
                     </div>
                     <div class="mb-3">
-                        <label for="add_namabarang" class="form-label">Nama Barang</label>
-                        <input type="text" class="form-control" id="add_namabarang" name="namabarang" required>
-                    </div>
-
+                        <label for="add_idbarang" class="form-label">Nama Barang</label>
+                        <select class="form-select" name="idbarang" id="add_idbarang">
+                            <option value="" selected disabled>Pilih Barang</option>
+                            <?php
+                            $barang = $conn->query("SELECT idbarang, namabarang FROM barang ORDER BY namabarang");
+                            while ($row = $barang->fetch_assoc()) {
+                                echo "<option value='" . htmlspecialchars($row['idbarang']) . "'>"
+                                . htmlspecialchars($row['namabarang']) . "</option>";
+                            }
+                            ?>
+                        </select>
+                        
+                    </div>                    
                     <div class="mb-3">
-                        <label for="add_merk" class="form-label">Merk</label>
-                        <input type="text" class="form-control" id="add_merk" name="merk" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="add_deskripsi" class="form-label">Deskripsi</label>
-                        <input type="text" class="form-control" id="add_deskripsi" name="deskripsi"required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="add_stok" class="form-label">Stok</label>
-                        <input type="number" class="form-control" id="add_stok" name="stok"required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="add_harga" class="form-label">Harga</label>
-                        <input type="number" class="form-control" id="add_harga" name="harga"required>
+                        <label for="add_tanggal" class="form-label">Tanggal Penjualan</label>
+                        <input type="date" class="form-control" id="add_tanggal" name="tanggal"required>
                     </div>
                     <div class="mb-3">
-                        <label for="foto_barang">Foto Barang</label> <br>
-                        <input type="file" class="form-control" name="foto_barang" id="add_profile" accept=".jpg, .jpeg, .png, .jfif" required>
+                        <label for="add_jumlah" class="form-label">Jumlah</label>
+                        <input type="number" class="form-control" id="add_jumlah" name="jumlah" min="1" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Add</button>
                 </form>
@@ -183,45 +182,37 @@ if (isset($_SESSION['message'])) {
     </div>
 </div>
 
-<!-- Modal Edit Barang -->
-<div class="modal fade" id="editBarangModal" tabindex="-1" aria-labelledby="editBarangModalLabel" aria-hidden="true">
+<!-- Modal Edit Penjualan -->
+<div class="modal fade" id="editPenjualanModal" tabindex="-1" aria-labelledby="editPenjualanModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editBarangModalLabel">Edit Barang</h5>
+                <h5 class="modal-title" id="editPenjualanModalLabel">Edit Penjualan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="edit_barang.php" method="post" enctype="multipart/form-data">
+                <form action="edit_penjualan.php" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
-                    <label for="idbarang" class="form-label">Id barang</label>
-                        <input type="text" class="form-control" id="edit_idbarang" name="idbarang" value="<?php echo htmlspecialchars($newidbarang); ?>" readonly>
+                    <label for="idjual" class="form-label">ID Penjualan</label>
+                        <input type="text" class="form-control" id="edit_idjual" name="idjual" readonly>
                     </div>
                     <div class="mb-3">
-                        <label for="edit_namabarang" class="form-label">Nama Barang</label>
-                        <input type="text" class="form-control" id="edit_namabarang" name="namabarang" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="edit_merk" class="form-label">Merk</label>
-                        <input type="text" class="form-control" id="edit_merk" name="merk" required>
+                        <label for="edit_idbarang" class="form-label">ID Barang</label>
+                        <select class="form-control" id="edit_idbarang" name="idbarang" required>
+                            
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="edit_deskripsi" class="form-label">Deskripsi</label>
-                        <input type="text" class="form-control" id="edit_deskripsi" name="deskripsi"required>
+                        <label for="edit_tanggal" class="form-label">Tanggal Penjualan</label>
+                        <input type="date" class="form-control" id="edit_tanggal" name="tanggal"required>
                     </div>
                     <div class="mb-3">
-                        <label for="edit_stok" class="form-label">Stok</label>
-                        <input type="number" class="form-control" id="edit_stok" name="stok"required>
+                        <label for="edit_jumlah" class="form-label">Jumlah</label>
+                        <input type="number" class="form-control" id="edit_jumlah" name="jumlah" min="1" required>
                     </div>
                     <div class="mb-3">
-                        <label for="edit_harga" class="form-label">Harga</label>
-                        <input type="number" class="form-control" id="edit_harga" name="harga"required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="foto_barang">Foto Barang</label> <br>
-                        <img id="edit_foto" src="" alt="Current Barang Foto" class="mb-2" style="max-width: 100px;">
-                        <input type="file" class="form-control" name="foto_barang" id="edit_profile" accept=".jpg, .jpeg, .png">
+                        <label for="edit_hargasatuan" class="form-label">Harga Satuan</label>
+                        <input type="number" class="form-control" id="edit_hargasatuan" name="hargasatuan" min="1" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
@@ -250,8 +241,8 @@ if (isset($_SESSION['message'])) {
             var footerHeight = $('footer').outerHeight();
             var tableHeight = 'calc(100vh - 290px - ' + footerHeight + 'px)';
 
-            $('#barangTable').DataTable().destroy();
-            $('#barangTable').DataTable({
+            $('#penjualanTable').DataTable().destroy();
+            $('#penjualanTable').DataTable({
                 "pagingType": "simple_numbers",
                 "scrollY": tableHeight,
                 "scrollCollapse": true,
@@ -282,33 +273,48 @@ if (isset($_SESSION['message'])) {
         document.querySelectorAll('.edit-btn').forEach(button => {
             button.addEventListener('click', function () {
                 // Get data attributes from the button
+                const idjual = this.getAttribute('data-id');
+                const jumlah = this.getAttribute('data-jumlah');
+                const tanggal = this.getAttribute('data-tanggal');
+                const hargasatuan = this.getAttribute('data-hargasatuan');
+
                 const idbarang = this.getAttribute('data-idbarang');
                 const namabarang = this.getAttribute('data-namabarang');
-                const merk = this.getAttribute('data-merk');
-                const deskripsi = this.getAttribute('data-deskripsi');
-                const stok = this.getAttribute('data-stok');
-                const harga = this.getAttribute('data-harga');
-                const foto = this.getAttribute('data-foto');
 
                 // Set values in the modal
-                document.getElementById('edit_idbarang').value = idbarang;
-                document.getElementById('edit_namabarang').value = namabarang;
-                document.getElementById('edit_merk').value = merk;
-                document.getElementById('edit_deskripsi').value = deskripsi;
-                document.getElementById('edit_stok').value = stok;
-                document.getElementById('edit_harga').value = harga;
+                document.getElementById('edit_idjual').value = idjual;
+                document.getElementById('edit_jumlah').value = jumlah;
+                document.getElementById('edit_tanggal').value = tanggal;
+                document.getElementById('edit_hargasatuan').value = hargasatuan;
 
-                // document.getElementById('edit_foto').src = foto;
+                // Set combobox nama pegawai
+                const editBarangSelect = document.getElementById('edit_idbarang');
+                editBarangSelect.innerHTML = `<option value="${idbarang}">${namabarang}</option>`;
 
-                 // Set the current profile picture source
-                document.getElementById('edit_foto').src = 'foto_barang/' + foto; // Set the src for current profile picture
-            });
+                // Load seluruh pegawai dari database saat combobox diklik
+                editBarangSelect.addEventListener('click', function() {
+                    if (editBarangSelect.options.length === 1) { // Jika belum pernah load data pegawai
+                        $.ajax({
+                            url: 'get_barang_list.php',
+                            method: 'GET',
+                            success: function(response) {
+                                editBarangSelect.innerHTML = response;
+                                editBarangSelect.value = idbarang; // Pastikan pegawai yang sedang dipilih tetap terpilih
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Gagal mendapatkan daftar barang:', error);
+                            }
+                        });
+                    };
+                });
+            })
         });
     });
+    
 
     // Handle delete button click
     $(document).on('click', '.delete-btn', function() {
-        var idbarang = $(this).data('id');
+        var idjual = $(this).data('id');
         Swal.fire({
             title: 'Are you sure?',
             text: 'Apa benar data tersebut dihapus',
@@ -320,9 +326,9 @@ if (isset($_SESSION['message'])) {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: 'delete_barang.php',
+                    url: 'delete_penjualan.php',
                     type: 'POST',
-                    data: { idbarang: idbarang },
+                    data: { idjual: idjual },
                     success: function(response) {
                         console.log(response); // Debugging
                         if (response.includes('Success')) {
@@ -359,7 +365,7 @@ if (isset($_SESSION['message'])) {
         document.querySelectorAll('.print-btn').forEach(function(button) {
             button.addEventListener('click', function() {
                 var id = this.getAttribute('data-id');
-                window.open('print_barang.php?id=' + id, '_blank');
+                window.open('print_penjualan.php?id=' + id, '_blank');
             });
         });
     });
