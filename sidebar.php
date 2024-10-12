@@ -25,7 +25,7 @@
             <a class="menu-toggle"><span><i class="fas fa-users"></i> Master</span><i class="fas fa-chevron-right arrow"></i></a>
             <ul class="sub-menu">
                 <li><a href="stok_barang.php"><span>Stok Barang</span></a></li>
-                <li><a href="pembelian_barang.php"><span>Pembelian Barang</span></a></li>
+                <li><a href="pembelian.php"><span>Pembelian Barang</span></a></li>
                 <li><a href="penjualan_barang.php"><span>Penjualan Barang</span></a></li>
             </ul>
         </li>
