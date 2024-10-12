@@ -5,7 +5,7 @@ require 'login_session.php';
 
 // Ambil data dari tabel barang
 $barang = $conn->query("SELECT * FROM barang");
-$pembelian = $conn->query("SELECT p.idbeli, p.idbarang, p.tanggal, p.jumlah, p.hargasatuan, b.namabarang, b.merk FROM pembelian p JOIN barang b ON p.idbarang = b.idbarang ORDER BY p.tanggal");
+$pembelian = $conn->query("SELECT p.idbeli, p.idbarang, p.tanggal, p.jumlah, p.hargasatuan, b.namabarang, b.merk FROM pembelian p JOIN barang b ON p.idbarang = b.idbarang ORDER BY p.tanggal DESC");
     
 $staffid = $_SESSION['staffid'];
 
@@ -74,7 +74,7 @@ if (isset($_SESSION['message'])) {
                                 <tr>
                                     <th style="width: 1%;">No</th>
                                     <th>ID Pembelian</th> 
-                                    <th >ID Barang</th>
+                                    <th>ID Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Merk</th>
                                     <th>Tanggal</th>
