@@ -74,7 +74,7 @@ if (isset($_SESSION['message'])) {
                                 <tr>
                                     <th style="width: 1%;">No</th>
                                     <th>ID Pembelian</th> 
-                                    <th style="width: 1%;">Id Barang</th>
+                                    <th >ID Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Merk</th>
                                     <th>Tanggal</th>
