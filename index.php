@@ -69,7 +69,7 @@ $jmlhpenjualanbrg = $row['count'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
-    <link rel="stylesheet" href="/JAYA_GUDANG/CSS/index.css">
+    <link rel="stylesheet" href="/JAYA_ELEKTRONIK/CSS/index.css">
 </head>
 <body>
 
@@ -126,7 +126,7 @@ $jmlhpenjualanbrg = $row['count'];
             <div class="full-width-card">
                 <div class="card w-100">
                     <div class="card-header"><strong>Aplikasi Stok Barang</strong></div>
-                    <img src="/JAYA_GUDANG/gambar/gudang_gambar.png" class="img-fluid" style="display:block; margin:auto;">
+                    <img src="/JAYA_ELEKTRONIK/gambar/gudang_gambar.png" class="img-fluid" style="display:block; margin:auto;">
                 </div>
             </div>
         </div>

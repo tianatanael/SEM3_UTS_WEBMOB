@@ -35,7 +35,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="/JAYA_GUDANG/CSS/index.css">
+    <link rel="stylesheet" href="/JAYA_ELEKTRONIK/CSS/index.css">
 
 </head>
 <body>

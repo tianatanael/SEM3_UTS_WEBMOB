@@ -53,16 +53,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Jaya Gudang</title>
+    <title>Jaya Elektronik</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="/JAYA_GUDANG/AdminLte/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/JAYA_ELEKTRONIK/AdminLte/fontawesome-free/css/all.min.css">
     <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="/JAYA_GUDANG/AdminLte/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="/JAYA_ELEKTRONIK/AdminLte/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="/JAYA_GUDANG/AdminLte/css/adminlte.min.css">
+    <link rel="stylesheet" href="/JAYA_ELEKTRONIK/AdminLte/css/adminlte.min.css">
 
     <!-- Include jQuery first -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="../../index2.html" class="h1"><b>Jaya Gudang</b></a>
+                <a href="../../index2.html" class="h1"><b>Jaya Elektronik</b></a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Log in to start your session</p>

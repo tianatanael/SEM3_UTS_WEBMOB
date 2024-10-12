@@ -6,7 +6,7 @@
     <title>Aplikasi HRD</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="/JAYA_GUDANG/CSS/sidebar.css">
+    <link rel="stylesheet" href="/JAYA_ELEKTRONIK/CSS/sidebar.css">
 </head>
 <body>
 <!-- Sidebar -->
