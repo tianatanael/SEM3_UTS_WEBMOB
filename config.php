@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "root"; // Sesuaikan dengan username MySQL Anda
 $password = ""; // Kosongkan jika Anda tidak memiliki password untuk MySQL
-$dbname = "db_uts_toko";
+$dbname = "db_jayaelektronik";
 // Membuat koneksi
 $conn = new mysqli($servername, $username, $password, $dbname);
 // Memeriksa koneksi
